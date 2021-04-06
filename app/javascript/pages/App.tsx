@@ -1,15 +1,19 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import NavBar from "../components/NavBar";
 
-import Airline from "./Airline/Airline";
-import Airlines from "./Airlines/Airlines";
+import Airline from "./Airline";
+import Airlines from "./Airlines";
 
 const App: React.FC = () => {
   return (
-    <Switch>
-      <Route exact path="/" component={Airlines} />
-      <Route exact path="/airlines/:slug" component={Airline} />
-    </Switch>
+    <>
+      <NavBar />
+      <Switch>
+        <Route exact path="/" component={Airlines} />
+        <Route exact path="/airlines/:slug" component={Airline} />
+      </Switch>
+    </>
   );
 };
 
