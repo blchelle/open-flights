@@ -4,15 +4,19 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import App from "../pages/App";
-
 import { BrowserRouter as Router, Route } from "react-router-dom";
+import { ChakraProvider } from "@chakra-ui/react";
+
+import App from "../pages/App";
+import theme from "./theme";
 
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
-    <Router>
-      <Route path="/" component={App} />
-    </Router>,
+    <ChakraProvider theme={theme}>
+      <Router>
+        <Route path="/" component={App} />
+      </Router>
+    </ChakraProvider>,
     document.body.appendChild(document.createElement("div"))
   );
 });
