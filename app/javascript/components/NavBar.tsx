@@ -5,7 +5,7 @@ const NavBar = () => {
   return (
     <Flex
       justify="space-between"
-      py={3}
+      h={70}
       px={16}
       w="100%"
       alignItems="center"
