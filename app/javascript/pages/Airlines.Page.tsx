@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Grid, Heading, VStack } from "@chakra-ui/layout";
-import AirlineCard from "../components/AirlineCard";
+import AirlineCard from "../components/AirlineCard.component";
 import Airline from "../types/Airline";
 
 const AirlinesPage = () => {

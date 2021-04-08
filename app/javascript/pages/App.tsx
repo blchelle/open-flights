@@ -1,10 +1,10 @@
 import { Stack } from "@chakra-ui/react";
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import NavBar from "../components/NavBar";
+import NavBar from "../components/NavBar.component";
 
-import AirlinePage from "./AirlinePage";
-import AirlinesPage from "./Airlines";
+import AirlinePage from "./Airline.Page";
+import AirlinesPage from "./Airlines.Page";
 
 const App: React.FC = () => {
   return (

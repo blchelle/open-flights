@@ -4,9 +4,9 @@ import axios from "axios";
 import Airline from "../types/Airline";
 import { CircularProgress } from "@chakra-ui/progress";
 import { Flex, Grid, Stack } from "@chakra-ui/react";
-import AirlineHeader from "../components/AirlineHeader";
+import AirlineHeader from "../components/AirlineHeader.component";
 import Review from "../types/Review";
-import ReviewForm from "../components/ReviewForm";
+import ReviewForm from "../components/ReviewForm.component";
 
 interface PageParams {
   slug: string;
