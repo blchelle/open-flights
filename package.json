@@ -4,6 +4,7 @@
   "dependencies": {
     "@babel/preset-react": "^7.13.13",
     "@babel/preset-typescript": "^7.13.0",
+    "@chakra-ui/icons": "^1.0.9",
     "@chakra-ui/react": "^1.4.2",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",

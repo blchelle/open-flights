@@ -1,9 +1,11 @@
 import { Avatar } from "@chakra-ui/avatar";
+import { StarIcon } from "@chakra-ui/icons";
 import { Heading, HStack } from "@chakra-ui/layout";
 import { Stack } from "@chakra-ui/react";
 import React from "react";
 import Airline from "../types/Airline";
 import Review from "../types/Review";
+import Stars from "./Stars.component";
 
 interface AirlineHeaderProps {
   airline: Airline;
@@ -21,8 +23,9 @@ const AirlineHeader: React.FC<AirlineHeaderProps> = ({
         <Heading size="3xl">{name}</Heading>
       </HStack>
       <Heading size="md">{reviews.length} Reviews</Heading>
+      <Stars score={avg_score} size={10} />
       <Heading size="lg" fontWeight="light">
-        {avg_score} out of 5 stars
+        {avg_score.toFixed(1)} out of 5 stars
       </Heading>
     </Stack>
   );
