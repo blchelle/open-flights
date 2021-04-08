@@ -11,34 +11,69 @@ import {
   SliderTrack,
   Stack,
 } from "@chakra-ui/react";
+import axios from "axios";
 import React, { ChangeEvent, useState } from "react";
 import Airline from "../types/Airline";
+import Review from "../types/Review";
 
 interface ReviewFormProps {
   airline: Airline;
+  onSuccess: (r: Review) => void;
 }
 
-const ReviewForm: React.FC<ReviewFormProps> = ({ airline: { name } }) => {
+const ReviewForm: React.FC<ReviewFormProps> = ({ airline, onSuccess }) => {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [score, setScore] = useState(0);
 
-  const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleTextChange = (e: ChangeEvent<HTMLInputElement>) => (
+    setState: React.Dispatch<React.SetStateAction<string>>
+  ) => {
     e.preventDefault();
+    setState(e.target.value);
+  };
+
+  const handleSubmit = () => {
+    let review: Review = {
+      title,
+      description,
+      score,
+      airline_id: airline.id,
+    };
+
+    const csrfToken = document.querySelector("[name=csrf-token]").textContent;
+    axios.defaults.headers.common["X-CSRF-TOKEN"] = csrfToken;
+
+    axios
+      .post(`/api/v1/reviews`, review)
+      .then((res) => {
+        onSuccess(res.data.data.attributes);
+      })
+      .catch((res) => {
+        console.log(res);
+      });
   };
 
   return (
     <Stack bg="black" color="white" p={16} spacing={16}>
-      <Heading>Have an experience with {name}? Share your review</Heading>
+      <Heading>
+        Have an experience with {airline.name}? Share your review
+      </Heading>
       <Stack spacing={8}>
         <Input
           placeholder="Review Title"
           bg="white"
           color="black"
           size="lg"
-          onChange={handleTextChange}
+          onChange={(e) => handleTextChange(e)(setTitle)}
         />
-        <Input placeholder="Description" bg="white" color="black" size="lg" />
+        <Input
+          placeholder="Description"
+          bg="white"
+          color="black"
+          size="lg"
+          onChange={(e) => handleTextChange(e)(setDescription)}
+        />
         <HStack spacing={16}>
           <Slider
             defaultValue={0}
@@ -57,7 +92,12 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ airline: { name } }) => {
         </HStack>
       </Stack>
       <DarkMode>
-        <Button colorScheme="yellow" alignSelf="start" size="lg">
+        <Button
+          colorScheme="yellow"
+          alignSelf="start"
+          size="lg"
+          onClick={handleSubmit}
+        >
           Submit Review
         </Button>
       </DarkMode>

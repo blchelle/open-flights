@@ -15,7 +15,6 @@ interface PageParams {
 const AirlinePage = () => {
   const [airline, setAirline] = useState<Airline>(null);
   const [reviews, setReviews] = useState<Review[]>([]);
-  const [review, setReview] = useState({});
   const [loading, setLoading] = useState(true);
 
   const params = useParams() as PageParams;
@@ -25,13 +24,30 @@ const AirlinePage = () => {
     axios(`/api/v1/airlines/${slug}`)
       .then((res) => {
         setTimeout(() => {
-          setAirline(res.data.data.attributes);
+          let { data } = res.data;
+
+          let airline: Airline = {
+            id: data.id,
+            ...data.attributes,
+          };
+
+          setAirline(airline);
           setReviews(res.data.data.relationships.reviews.data);
           setLoading(false);
         }, 1000);
       })
       .catch((err) => console.log(err));
   }, []);
+
+  const addReview = (r: Review) => {
+    // Updates the airlines average score
+    const newAvgScore =
+      (airline.avg_score * reviews.length + r.score) / (reviews.length + 1);
+    setAirline({ ...airline, avg_score: newAvgScore });
+
+    // Pushes the review
+    setReviews([...reviews, r]);
+  };
 
   if (loading)
     return (
@@ -48,7 +64,7 @@ const AirlinePage = () => {
       <Stack p={16} justify="center">
         <AirlineHeader airline={airline} reviews={reviews} />;
       </Stack>
-      <ReviewForm airline={airline} />
+      <ReviewForm airline={airline} onSuccess={addReview} />
     </Grid>
   );
 };
