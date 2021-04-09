@@ -8,6 +8,8 @@ interface StarsProps {
 }
 
 const Stars: React.FC<StarsProps> = ({ score, size }) => {
+  console.log("Rending stars with score" + score);
+
   return (
     <HStack>
       {new Array(Math.round(score)).fill(0).map(() => (

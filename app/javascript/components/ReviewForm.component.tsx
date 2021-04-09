@@ -55,7 +55,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ airline, onSuccess }) => {
   };
 
   return (
-    <Stack bg="black" color="white" p={16} spacing={16}>
+    <Stack bg="black" color="white" p={16} spacing={24}>
       <Heading>
         Have an experience with {airline.name}? Share your review
       </Heading>
@@ -65,6 +65,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ airline, onSuccess }) => {
           bg="white"
           color="black"
           size="lg"
+          h="80px"
           onChange={(e) => handleTextChange(e)(setTitle)}
         />
         <Input
@@ -72,6 +73,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ airline, onSuccess }) => {
           bg="white"
           color="black"
           size="lg"
+          h="80px"
           onChange={(e) => handleTextChange(e)(setDescription)}
         />
         <HStack spacing={16}>
@@ -93,12 +95,13 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ airline, onSuccess }) => {
       </Stack>
       <DarkMode>
         <Button
-          colorScheme="yellow"
-          alignSelf="start"
+          colorScheme="blue"
           size="lg"
+          h="60px"
+          fontSize={20}
           onClick={handleSubmit}
         >
-          Submit Review
+          Submit Your Review
         </Button>
       </DarkMode>
     </Stack>

@@ -8,8 +8,8 @@ const NavBar = () => {
   return (
     <Flex
       justify="space-between"
-      h={70}
       px={16}
+      py={4}
       w="100%"
       alignItems="center"
       bg="black"

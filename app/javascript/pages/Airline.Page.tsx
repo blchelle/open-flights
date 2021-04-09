@@ -3,10 +3,11 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import Airline from "../types/Airline";
 import { CircularProgress } from "@chakra-ui/progress";
-import { Flex, Grid, Stack } from "@chakra-ui/react";
+import { Flex, Grid, Stack, VStack } from "@chakra-ui/react";
 import AirlineHeader from "../components/AirlineHeader.component";
 import Review from "../types/Review";
 import ReviewForm from "../components/ReviewForm.component";
+import ReviewCard from "../components/ReviewCard.component";
 
 interface PageParams {
   slug: string;
@@ -31,10 +32,12 @@ const AirlinePage = () => {
             ...data.attributes,
           };
 
+          console.log(res);
+
           setAirline(airline);
-          setReviews(res.data.data.relationships.reviews.data);
+          setReviews(res.data.included.map((r) => r.attributes));
           setLoading(false);
-        }, 1000);
+        }, 500);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -61,8 +64,13 @@ const AirlinePage = () => {
       h="100%"
       gridTemplateColumns="repeat(auto-fit, minmax(650px, 1fr))"
     >
-      <Stack p={16} justify="center">
+      <Stack p={16} justify="center" spacing={24}>
         <AirlineHeader airline={airline} reviews={reviews} />;
+        <Stack>
+          {reviews.map((r) => (
+            <ReviewCard review={r} />
+          ))}
+        </Stack>
       </Stack>
       <ReviewForm airline={airline} onSuccess={addReview} />
     </Grid>

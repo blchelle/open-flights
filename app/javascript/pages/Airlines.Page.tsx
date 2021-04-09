@@ -3,9 +3,11 @@ import axios from "axios";
 import { Grid, Heading, VStack } from "@chakra-ui/layout";
 import AirlineCard from "../components/AirlineCard.component";
 import Airline from "../types/Airline";
+import { CircularProgress, Flex } from "@chakra-ui/react";
 
 const AirlinesPage = () => {
   const [airlines, setAirlines] = useState<Airline[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     // Gets all of our airlines from api
@@ -13,17 +15,30 @@ const AirlinesPage = () => {
       .get("/api/v1/airlines")
       .then((res) => {
         let data = res.data.data;
-        setAirlines(
-          data.map((airline) => ({
-            id: airline.id,
-            ...airline.attributes,
-          }))
-        );
+
+        setTimeout(() => {
+          setAirlines(
+            data.map((airline) => ({
+              id: airline.id,
+              ...airline.attributes,
+            }))
+          );
+
+          setIsLoading(false);
+        }, 500);
       })
       .catch((res) => console.log(res));
 
     // Updates airlines state
   }, []);
+
+  if (isLoading) {
+    return (
+      <Flex h="100%" w="100%" justifyContent="center" alignItems="center">
+        <CircularProgress isIndeterminate color="black" />
+      </Flex>
+    );
+  }
 
   return (
     <VStack spacing={16} p={4} h="100%" justify="center">
